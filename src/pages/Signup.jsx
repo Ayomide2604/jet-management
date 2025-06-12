@@ -1,6 +1,18 @@
 import { Link } from "react-router-dom";
 import "../assets/css/main.css";
+import useAuthStore from "../stores/useAuthStore";
+import { useState } from "react";
 const Signup = () => {
+	const { register } = useAuthStore();
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [username, setUsername] = useState("");
+
+	const handleRegister = async (e) => {
+		e.preventDefault();
+		register(username, email, password);
+	};
+
 	return (
 		<section className="signin-section">
 			<div className="container-fluid">
@@ -36,19 +48,33 @@ const Signup = () => {
 								<p className="text-sm mb-25">
 									Begin your journey with Syria Jet Management.
 								</p>
-								<form id="signup-form" action="#">
+								<form id="signup-form" onSubmit={handleRegister}>
 									<div className="row">
 										<div className="col-12">
 											<div className="input-style-1">
-												<label>Name</label>
-												<input type="text" placeholder="Name" required="" />
+												<label>Username</label>
+												<input
+													type="text"
+													placeholder="Name"
+													required
+													onChange={(e) => {
+														setUsername(e.target.value);
+													}}
+												/>
 											</div>
 										</div>
 										{/* end col */}
 										<div className="col-12">
 											<div className="input-style-1">
 												<label>Email</label>
-												<input type="email" placeholder="Email" required="" />
+												<input
+													type="email"
+													placeholder="Email"
+													required
+													onChange={(e) => {
+														setEmail(e.target.value);
+													}}
+												/>
 											</div>
 										</div>
 										{/* end col */}
@@ -59,7 +85,10 @@ const Signup = () => {
 													type="password"
 													placeholder="Password"
 													id="password"
-													required=""
+													required
+													onChange={(e) => {
+														setPassword(e.target.value);
+													}}
 												/>
 												<p
 													id="password-error"
@@ -76,7 +105,7 @@ const Signup = () => {
 										</div>
 										{/* end col */}
 										<div className="col-12">
-											<div className="input-style-1">
+											{/* <div className="input-style-1">
 												<label>Confirm Password</label>
 												<input
 													type="password"
@@ -88,7 +117,7 @@ const Signup = () => {
 													id="confirm-password-error"
 													style={{ color: "red", fontSize: "0.9em" }}
 												/>
-											</div>
+											</div> */}
 										</div>
 										{/* end col */}
 										<div className="col-12">

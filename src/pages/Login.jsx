@@ -1,6 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/main.css";
+import useAuthStore from "../stores/useAuthStore";
+import { useState } from "react";
 const Login = () => {
+	const { login } = useAuthStore();
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+
+	const handleLogin = async (e) => {
+		e.preventDefault();
+		login(email, password);
+	};
 	return (
 		<div className="row g-0 auth-row">
 			<div className="col-lg-6">
@@ -32,19 +42,33 @@ const Login = () => {
 						<p className="text-sm mb-25">
 							Your gateway to personalized air travel.
 						</p>
-						<form action="#">
+						<form onSubmit={handleLogin}>
 							<div className="row">
 								<div className="col-12">
 									<div className="input-style-1">
 										<label>Email</label>
-										<input type="email" placeholder="Email" />
+										<input
+											type="email"
+											placeholder="Email"
+											onChange={(e) => {
+												setEmail(e.target.value);
+											}}
+											required
+										/>
 									</div>
 								</div>
 								{/* end col */}
 								<div className="col-12">
 									<div className="input-style-1">
 										<label>Password</label>
-										<input type="password" placeholder="Password" />
+										<input
+											type="password"
+											placeholder="Password"
+											onChange={(e) => {
+												setPassword(e.target.value);
+											}}
+											required
+										/>
 									</div>
 								</div>
 								{/* end col */}
@@ -75,8 +99,11 @@ const Login = () => {
 								{/* end col */}
 								<div className="col-12">
 									<div className="button-group d-flex justify-content-center flex-wrap">
-										<button className="main-btn primary-btn btn-hover w-100 text-center">
-											<a href="../dashboard/index.html">Sign In</a>
+										<button
+											type="submit"
+											className="main-btn primary-btn btn-hover w-100 text-center"
+										>
+											Sign In
 										</button>
 									</div>
 								</div>
